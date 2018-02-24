@@ -13,11 +13,12 @@ var ArticleSchema = new Schema({
     },
     summary: {
         type: String,
-        required: true
+        required: false
     },
     note: {
         type: String,
-        ref: "Note"
+        ref: "Note",
+        required: false
     }
 });
 

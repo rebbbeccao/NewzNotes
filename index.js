@@ -7,7 +7,7 @@ var cheerio = require("cheerio");
 
 var db = require("./models");
 
-var PORT = 2020;
+var PORT = process.env.PORT || 2020;
 
 var app = express();
 
@@ -15,24 +15,32 @@ app.use(logger("dev"));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static("public"));
 
-// If deployed, use the deployed database. Otherwise use the local mongoHeadlines database
-const MONGODB_URI =
-  process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
+// // If deployed, use the deployed database. Otherwise use the local mongoHeadlines database
+// const MONGODB_URI =
+//   process.env.MONGODB_URI || "mongodb://localhost/NewzNotes";
 
-// Set mongoose to leverage built in JavaScript ES6 Promises
-// Connect to the Mongo DB
+// // Set mongoose to leverage built in JavaScript ES6 Promises
+// // Connect to the Mongo DB
 // mongoose.Promise = Promise;
 // mongoose.connect(MONGODB_URI, {
 //   useMongoClient: true
 // });
+mongoose.Promise = Promise;
+mongoose.connect("mongodb://localhost/newznotes", {
+  useMongoClient: true
+});
 
 //GET route to scrape website
 
-app.get("/scrape", (req, res) => {
+app.get("/", function(req, res) {
+  res.send("Hello World NewzNote App");
+});
+
+app.get("/scrape", function(req, res) {
   axios.get("http://www.foxnews.com/lifestyle.html").then(function(response) {
     var $ = cheerio.load(response.data);
 
-    $("article", ".m").each(function(i, element) {
+    $("h2").each(function(i, element) {
       var result = {};
 
       result.title = $(this)
@@ -40,22 +48,16 @@ app.get("/scrape", (req, res) => {
         .text();
       result.link = $(this)
         .children("a")
-        .attr('href');
+        .attr("href");
 
-    //   return result;
-
-      // ,
-
-      // $('.dek').each(function(i, element) {
-      //     result.summary = $(this)
-      //         .children('a')
-      //         .text();
-      //     return result;
-      // })
+    //   console.log(result.title);
+    //   console.log(result.link);
 
       db.Article.create(result)
+
         .then(function(dbArticle) {
           console.log(dbArticle);
+          //return res.json(result);
         })
         .catch(function(error) {
           return res.json(error);
@@ -63,6 +65,26 @@ app.get("/scrape", (req, res) => {
     });
     res.send("Scrape Complete!");
   });
+});
+
+app.get("/articles", function(req, res) {
+    db.Article.find({})
+    .then(function(dbArticle) {
+        res.json(dbArticle);
+    })
+    .catch(function(error) {
+        res.json(error);
+    });
+});
+
+app.get("/articles/:id", function(req, res) {
+    db.Article.find({ _id: req.params.id })
+    .then(function(dbArticle) {
+        res.json(dbArticle);
+    })
+    .catch(function(error) {
+        res.json(error);
+    });
 });
 
 app.listen(PORT, () => {
