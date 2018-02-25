@@ -19,7 +19,8 @@ var ArticleSchema = new Schema({
         type: String,
         ref: "Note",
         required: false
-    }
+    },
+    saved: false
 });
 
 var Article = mongoose.model('Article', ArticleSchema);

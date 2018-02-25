@@ -33,10 +33,12 @@ mongoose.connect("mongodb://localhost/newznotes", {
 //GET route to scrape website
 
 app.get("/", function(req, res) {
+    
   res.send("Hello World NewzNote App");
 });
 
 app.get("/scrape", function(req, res) {
+
   axios.get("http://www.foxnews.com/lifestyle.html").then(function(response) {
     var $ = cheerio.load(response.data);
 
@@ -52,6 +54,7 @@ app.get("/scrape", function(req, res) {
 
     //   console.log(result.title);
     //   console.log(result.link);
+
 
       db.Article.create(result)
 
