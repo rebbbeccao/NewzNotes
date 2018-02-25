@@ -71,6 +71,7 @@ app.get("/articles", function(req, res) {
     db.Article.find({})
     .then(function(dbArticle) {
         res.json(dbArticle);
+        console.log("dbArticle = " + dbArticle);
     })
     .catch(function(error) {
         res.json(error);

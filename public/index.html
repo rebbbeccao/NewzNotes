@@ -1,12 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>NewzNotes</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ"
+        crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn"
+        crossorigin="anonymous"></script>
 </head>
+
 <body>
+    <!-- Navbar -->
+    <ul class="nav">
+        <li class="nav-item">
+            <a class="nav-link" href="#">NewzNotes</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link active" href="#">Home</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#">Saved Articles</a>
+        </li>
+        <li class="nav-item">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Scrape New Articles</button>
+        </li>
+    </ul>
+
+    <!-- Jumbotron -->
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+            <h1 class="display-4">NewzNotes</h1>
+            <p class="lead">Lifestyle Edition</p>
+        </div>
+    </div>
+    <!-- Card -->
     
+    <div class="card articles">
+        <!-- <a class="card-header article-header" href="#" class="card-link">Article Title</a> -->
+        <h2 class="card-header article-header">Uh oh! No articles yet :/</h2>
+        <div class="card-body">
+            <p class="card-text">Please scrape for acrticles above!</p>
+            <!-- <a href="#" class="btn btn-primary">Save article</a> -->
+        </div>
+    </div>
+    <!-- footer -->
+    <div class="footer">
+        <div id="footertext">Fox News | Lifetime | NewzNotes | Mongo Scraper</div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="./app.js"></script>
 </body>
+
 </html>
