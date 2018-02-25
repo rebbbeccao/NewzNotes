@@ -1,29 +1,4 @@
-// var Cheerio = require("cheerio");
 
-// Grab the scrapped articles as a json
-// $.getJSON("/articles", function(data) {
-//     //   $(".card").empty();
-//     for (var i = 0; i < data.length; i++) {
-//       console.log("JSON.stringify(data[i])= " + JSON.stringify(data[i]));
-
-//       $(".card").append(
-//         '<a class="card-header article-header" href=' +
-//           data[i].link +
-//           'class="card-link">' +
-//           data[i].title +
-//           "</a>" +
-//           '<a href="#" class="btn btn-primary">Save article</a>'
-//       );
-//       // $(".card-body").append(
-//       //   '<p class="card-text">' +
-//       //     data[i].summary +
-//       //     "</p>" +
-//       //     '<a href="#" class="btn btn-primary">' +
-//       //     "Save article" +
-//       //     "</a>"
-//       // );
-//     }
-//   });
 $(document).ready(function() {
   var articleContainer = $("#article-container");
   initialize();
@@ -44,17 +19,6 @@ $(document).ready(function() {
       }
     });
   }
-
-  //   function renderArticles(articles) {
-  //     console.log("renderArticles, articles = " + articles.title);
-  //     var articleCards = [];
-
-  //     for (var i = 0; i < articles.length; i++) {
-  //     // console.log("articles[i] = " + articles[i]);
-  //       articleCards.push(createCard(articles[i]));
-  //     }
-  //     articleContainer.append(articleCards);
-  //   }
 
   function createCard(article) {
     console.log("createCard, article= " + article);
