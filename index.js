@@ -16,20 +16,21 @@ app.use(logger("dev"));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static("public"));
 
-// // If deployed, use the deployed database. Otherwise use the local mongoHeadlines database
-// const MONGODB_URI =
-//   process.env.MONGODB_URI || "mongodb://localhost/NewzNotes";
+// If deployed, use the deployed database. Otherwise use the local mongoHeadlines database
+const MONGODB_URI =
+  process.env.MONGODB_URI || "mongodb://localhost/newznotes";
 
-// // Set mongoose to leverage built in JavaScript ES6 Promises
-// // Connect to the Mongo DB
-// mongoose.Promise = Promise;
-// mongoose.connect(MONGODB_URI, {
-//   useMongoClient: true
-// });
+// Set mongoose to leverage built in JavaScript ES6 Promises
+// Connect to the Mongo DB
 mongoose.Promise = Promise;
-mongoose.connect("mongodb://localhost/newznotes", {
+mongoose.connect(MONGODB_URI, {
   useMongoClient: true
 });
+
+// mongoose.Promise = Promise;
+// mongoose.connect("mongodb://localhost/newznotes", {
+//   useMongoClient: true
+// });
 
 //GET route to scrape website
 
@@ -103,7 +104,7 @@ app.get("/articles/saved", function(req, res) {
 
 //   var query = { saved: true };
 //   db.Article.find(query).ObjectId();
-// });
+});
 
 app.put("/articles/saved/:id", function(req, res) {
   db.Article.findOneAndUpdate({ _id: req.params.id }, { saved: true })
