@@ -3,9 +3,13 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var ArticleSchema = new Schema({
+    // _id: {
+    //     type: String
+    // },
     title: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     link: {
         type: String,
@@ -15,12 +19,16 @@ var ArticleSchema = new Schema({
         type: String,
         required: false
     },
+    saved: {
+        type: Boolean,
+        default: false
+
+    },
     note: {
         type: String,
         ref: "Note",
         required: false
-    },
-    saved: false
+    }
 });
 
 var Article = mongoose.model('Article', ArticleSchema);

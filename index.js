@@ -4,6 +4,7 @@ var logger = require("morgan");
 var mongoose = require("mongoose");
 var axios = require("axios");
 var cheerio = require("cheerio");
+var Path = require("path");
 
 var db = require("./models");
 
@@ -33,12 +34,10 @@ mongoose.connect("mongodb://localhost/newznotes", {
 //GET route to scrape website
 
 app.get("/", function(req, res) {
-    
   res.send("Hello World NewzNote App");
 });
 
 app.get("/scrape", function(req, res) {
-
   axios.get("http://www.foxnews.com/lifestyle.html").then(function(response) {
     var $ = cheerio.load(response.data);
 
@@ -52,9 +51,8 @@ app.get("/scrape", function(req, res) {
         .children("a")
         .attr("href");
 
-    //   console.log(result.title);
-    //   console.log(result.link);
-
+      //   console.log(result.title);
+      //   console.log(result.link);
 
       db.Article.create(result)
 
@@ -71,23 +69,49 @@ app.get("/scrape", function(req, res) {
 });
 
 app.get("/articles", function(req, res) {
-    db.Article.find({})
+  db.Article.find({})
     .then(function(dbArticle) {
-        res.json(dbArticle);
-        console.log("dbArticle = " + dbArticle);
+      res.json(dbArticle);
+      console.log("dbArticle = " + dbArticle);
     })
     .catch(function(error) {
-        res.json(error);
+      res.json(error);
     });
 });
 
 app.get("/articles/:id", function(req, res) {
-    db.Article.find({ _id: req.params.id })
+  db.Article.find({ _id: req.params.id })
     .then(function(dbArticle) {
-        res.json(dbArticle);
+      res.json(dbArticle);
     })
     .catch(function(error) {
-        res.json(error);
+      res.json(error);
+    });
+});
+//route not working throwing cast error (?)
+app.get("/articles/saved", function(req, res) {
+  db.Article.findAll({ saved: true })
+
+  .then(function(dbSaved) {
+    console.log("dbSaved=" + dbSaved);
+    res.json(dbSaved);
+      console.log("dbSaved=" + dbSaved);
+  })
+  .catch(function(error) {
+      res.json(error);
+  });
+
+//   var query = { saved: true };
+//   db.Article.find(query).ObjectId();
+// });
+
+app.put("/articles/saved/:id", function(req, res) {
+  db.Article.findOneAndUpdate({ _id: req.params.id }, { saved: true })
+    .then(function(dbArticle) {
+      res.json(dbArticle);
+    })
+    .catch(function(error) {
+      res.json(error);
     });
 });
 
