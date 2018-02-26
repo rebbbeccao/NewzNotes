@@ -80,18 +80,10 @@ app.get("/articles", function(req, res) {
     });
 });
 
-app.get("/articles/:id", function(req, res) {
-  db.Article.find({ _id: req.params.id })
-    .then(function(dbArticle) {
-      res.json(dbArticle);
-    })
-    .catch(function(error) {
-      res.json(error);
-    });
-});
+
 //route not working throwing cast error (?)
 app.get("/articles/saved", function(req, res) {
-  db.Article.findAll({ saved: true })
+  db.Article.where({ saved: true })
 
   .then(function(dbSaved) {
     console.log("dbSaved=" + dbSaved);
@@ -104,6 +96,19 @@ app.get("/articles/saved", function(req, res) {
 
 //   var query = { saved: true };
 //   db.Article.find(query).ObjectId();
+});
+
+
+
+
+app.get("/articles/:id", function(req, res) {
+  db.Article.find({ _id: req.params.id })
+    .then(function(dbArticle) {
+      res.json(dbArticle);
+    })
+    .catch(function(error) {
+      res.json(error);
+    });
 });
 
 app.put("/articles/saved/:id", function(req, res) {
