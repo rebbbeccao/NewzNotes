@@ -7,10 +7,10 @@ $(document).ready(function() {
   $(document).on("click", "#save-article", ArticleSave);
 
   function initialize() {
-    articleContainer.empty();
+    
     $.get("/articles").then(function(data) {
-      for (var i = 0; i < data.length; i++) {
-        // console.log("data[i].title=" + data[i].title);
+        articleContainer.empty();
+        for (var i = 0; i < data.length; i++) {
         if (data[i]) {
           createCard(data[i]);
         } else {
@@ -23,24 +23,26 @@ $(document).ready(function() {
   function createCard(article) {
     console.log("createCard, article= " + article);
     articleContainer.append(
-      '<a class="card-header article-header" href=' +
+        '<div class="card-div">' +
+      '<a class="card-header article-header card-link" href=' +
         article.link +
-        'class="card-link">' +
+        '>' +
         article.title +
         "</a>",
-      '<a href="#" class="btn btn-primary" id="save-article">Save article</a>'
+      '<a href="#" class="btn btn-primary" id="save-article">Save article</a>' +
       // '<p class="card-text">' data[i].summary + '</p>'
+        '</div>'
     );
-
+    
     articleContainer.attr("id", article._id);
-
+    $(".card-div").css("height", "100px");
+    $(".card-div").css("width", "100%");
+    // $(".card-div").css("align-content", "stretch");
+    // $(".card-header article-header card-link").css("display", "inline-block");
   }
 
   function renderEmpty() {
-    var emptycard = $(
-
-
-      [
+    articleContainer.append(
         '<div id="article-container">',
         '<div class="card articles">',
         '<h2 class="card-header article-header">Uh oh! No articles yet :/</h2>',
@@ -49,9 +51,7 @@ $(document).ready(function() {
         "</div>",
         "</div>",
         "</div>"
-      ] /*.join("")*/
     );
-    articleContainer.append(emptycard);
   }
 
   function ArticleSave() {
