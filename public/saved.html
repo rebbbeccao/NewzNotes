@@ -15,39 +15,40 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn"
         crossorigin="anonymous"></script>
         <link rel="stylesheet" href="./style.css">
+    
 </head>
 
 <body>
     <!-- Navbar -->
     <ul class="nav">
         <li class="nav-item">
-            <a class="nav-link" href="#">NewzNotes</a>
+            <a class="nav-link" href="/">NewzNotes</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link active" href="#">Home</a>
+            <a class="nav-link active" href="/">Home</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="/saved" id="go-to-saved">Saved Articles</a>
+            <a class="nav-link" href="#">Saved Articles</a>
         </li>
-        <li class="nav-item">
+        <!-- <li class="nav-item">
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit" id="scrape-articles">Scrape New Articles</button>
-        </li>
+        </li> -->
     </ul>
 
     <!-- Jumbotron -->
     <div class="jumbotron jumbotron-fluid">
         <div class="container">
-            <h1 class="display-4">NewzNotes</h1>
+            <h1 class="display-4">NewzNotes Saved</h1>
             <p class="lead">Lifestyle Edition</p>
         </div>
     </div>
     <!-- Card -->
-    <div id="article-container">
-        <div class="card articles">
+    <div id="saved-article-container">
+        <div class="card saved-articles">
             <!-- <a class="card-header article-header" href="#" class="card-link">Article Title</a> -->
-            <h2 class="card-header article-header">Uh oh! No articles yet :/</h2>
+            <h2 class="card-header saved-article-header">Uh oh! No saved articles yet :/</h2>
             <div class="card-body">
-                <p class="card-text">Please scrape for acrticles above!</p>
+                <p class="card-text">Please return to the Homepage to save acrticles.</p>
             </div>
         </div>
     </div>
@@ -56,8 +57,39 @@
         <div id="footertext">Fox News | Lifetime | NewzNotes | Mongo Scraper</div>
     </div>
 
+    <!-- Modal -->
+    <div class="modal fade">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Notes for: Saved Article Id</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                    <div class="card">
+                            <div class="card-block">
+                              No notes for this article yet.
+                            </div>
+                    </div>
+                <div class="form-group">
+                    <label for="exampleTextarea">New Note</label>
+                    <textarea class="form-control new-note" id="exampleTextarea" rows="3"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary" data-dismiss="modal">Save Changes</button>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="./app.js"></script>
+    <script src="./saved.js"></script>
 </body>
 
 </html>

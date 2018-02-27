@@ -3,6 +3,8 @@ $(document).ready(function() {
   initialize();
 
   $(document).on("click", "#scrape-articles", Scrape);
+  // $(document).on("click", "#go-to-saved", initializeSaved);
+  
 
   $(document).on("click", ".save-article", function() {
     var articleToSave = $(this).attr("id");
@@ -17,18 +19,6 @@ $(document).ready(function() {
     });
   });
 
-  function initialize() {
-    $.get("/articles").then(function(data) {
-      articleContainer.empty();
-      for (var i = 0; i < data.length; i++) {
-        if (!data[i]) {
-          renderEmpty();
-        } else {
-          createCard(data[i]);
-        }
-      }
-    });
-  }
 
   function initialize() {
     $.get("/articles").then(function(data) {
