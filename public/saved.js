@@ -2,6 +2,29 @@ $(document).ready(function() {
   var articleContainer = $("#saved-article-container");
   initializeSaved();
 
+  $(document).on("click", ".unsave-article", function() {
+    var unsaveArticle = $(this).attr("id");
+    var currentCardId = $("#card" + unsaveArticle).attr("id");
+    console.log(
+      "JSON.stringify(articleToSave)=" + JSON.stringify(unsaveArticle)
+    );
+
+    console.log("currentCard = " + currentCardId);
+
+    $.ajax({
+      method: "PUT",
+      url: "/articles/delete/" + unsaveArticle
+    }).then(function() {
+      console.log("Unsave article post success!");
+    });
+
+    $("#" + currentCardId).remove();
+    $("#" + unsaveArticle).remove();
+    location.reload();
+
+    return articleContainer;
+  });
+
   function initializeSaved() {
     $.get("/articles/saved").then(function(data) {
       articleContainer.empty();
@@ -32,6 +55,9 @@ $(document).ready(function() {
       '<a href="#" class="btn btn-primary add-note" id=' +
         savedarticle._id +
         ">Add Note</a>" +
+        '<a href="#" class="btn btn-secondary unsave-article" id=' +
+        savedarticle._id +
+        ">Unsave Article</a>" +
         // '<p class="card-text">' data[i].summary + '</p>'
         "</div>"
     );
@@ -55,34 +81,38 @@ $(document).ready(function() {
     // $(".saved-card-div").css("width", "100%");
   }
 
-  // $(document).on("click", ".add-note", function() {
-  //   var thisId = $(this).attr("id");
+  $(document).on("click", ".add-note", function() {
+    var thisId = $(this).attr("id");
+    var noteBody = "";
+    console.log("JSON.stringify(thisId)=" + JSON.stringify(thisId));
 
-  //   console.log("JSON.stringify(thisId)=" + JSON.stringify(thisId));
+    $(".modal-title").text("Notes for Article Id: " + thisId);
+    $(".new-note-body").attr("id", thisId);
+    $("#note-modal").modal("toggle");
 
-  //   $.ajax({
-  //     method: "POST",
-  //     url: "/articles/notes/" + thisId,
-  //     data: {
-  //       body: $("textarea").val()
-  //     }
-  //   }).then(function(data) {
-  //     console.log("data=" + JSON.stringify(data));
-  //   });
+    $(".save-note-button").on("click", function() {
+      var noteBody = $("#new-note-body").val();
+      console.log("noteBody = " + noteBody);
 
+      $.ajax({
+        method: "POST",
+        url: "/articles/notes/" + thisId,
+        data: {
+          body: noteBody
+        }
+      }).then(function(data) {
+        console.log(data);
 
+        // articleContainer.empty();
+        // if (data == "") {
+        // renderSavedEmpty();
+        // } else {
+        //   for (var i = 0; i < data.length; i++) {
+        //     console.log("renderSavedArticles(data[i]), data[i]= " + JSON.stringify(data[i]));
+        //     renderSavedArticles(data[i]);
+      });
 
-    // $.get("/articles/notes/:id").then(function(data) {
-    //   articleContainer.empty();
-    //   if (data == "") {
-    //     renderSavedEmpty();
-    //   } else {
-    //     for (var i = 0; i < data.length; i++) {
-    //       console.log("renderSavedArticles(data[i]), data[i]= " + JSON.stringify(data[i]));
-    //       renderSavedArticles(data[i]);
-    //     }
-    //   }
-    // });
-    // }
+      $(".new-note-body").val("");
+    });
   });
-// };
+});

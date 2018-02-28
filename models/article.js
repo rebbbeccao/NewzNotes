@@ -8,12 +8,12 @@ var ArticleSchema = new Schema({
     // },
     title: {
         type: String,
-        required: true,
+        required: false,
         unique: true
     },
     link: {
         type: String,
-        required: true
+        required: false
     },
     summary: {
         type: String,
@@ -24,11 +24,13 @@ var ArticleSchema = new Schema({
         default: false
 
     },
-    note: {
-        type: String,
+    note: [
+        {
+        type: Schema.Types.ObjectId,
         ref: "Note",
         required: false
-    }
+        }
+    ]
 });
 
 var Article = mongoose.model('Article', ArticleSchema);
